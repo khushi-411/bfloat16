@@ -2,12 +2,13 @@
 
 #include <cmath>
 #include <cstring>
+#include <cstdint>
 
 namespace c10 {
 
 namespace detail {
 
-inline __host__ __device__ float f32_from_bits(uint16_t src) {
+inline  float f32_from_bits(uint16_t src) {
     float res = 0;
     uint32_t tmp = src;
     tmp <<= 16;
@@ -15,13 +16,13 @@ inline __host__ __device__ float f32_from_bits(uint16_t src) {
     return res;
 }
 
-inline __host__ __device__ uint16_t bits_from_f32(float src) {
+inline  uint16_t bits_from_f32(float src) {
     uint32_t res = 0;
     std::memcpy(&res, &src, sizeof(res));
     return res >> 16;
 }
 
-inline __host__ __device__ uint16_t round_to_nearest_even(float src) {
+inline  uint16_t round_to_nearest_even(float src) {
     if (std::isnan(src)) {
         return UINT16_C(0x7FC0);
     } else {
@@ -44,13 +45,13 @@ struct alignas(2) BFloat16 {
     BFloat16() = default;
 
     struct from_bits_t {};
-    static constexpr __host__ __device__ from_bits_t from_bits() {
+    static constexpr  from_bits_t from_bits() {
         return from_bits_t();
     }
 
-    constexpr __host__ __device__ BFloat16(unsigned short bits, from_bits_t) : x(bits){};
-    inline __host__ __device__ BFloat16(float value);
-    inline __host__ __device__ operator float() const;
+    constexpr  BFloat16(unsigned short bits, from_bits_t) : x(bits){};
+    inline  BFloat16(float value);
+    inline  operator float() const;
 };
 
 }  // namespace c10
