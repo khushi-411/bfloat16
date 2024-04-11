@@ -1,0 +1,11 @@
+# ignore generated files
+build/
+*/build/
+
+# compiled object files
+main
+*.o
+*.obj
+
+# editor temporaries
+*.swp
